@@ -4,7 +4,7 @@
 
     <groupId>com.github.malkomich</groupId>
     <artifactId>event-stream</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>Event Stream</name>
@@ -189,7 +189,7 @@
         <connection>scm:git:git://github.com/malkomich/event-stream.git</connection>
         <developerConnection>scm:git:git@github.com:malkomich/event-stream.git</developerConnection>
         <url>https://github.com/malkomich/event-stream</url>
-        <tag>event-stream-1.0.1</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <profiles>
