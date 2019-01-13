@@ -10,7 +10,7 @@
     <packaging>jar</packaging>
 
     <name>Event Stream</name>
-    <description>Library for event oriented architecture</description>
+    <description>Library to abstract publish and subscribe implementation in an event-based arquitecture</description>
     <url>https://github.com/malkomich/event-stream</url>
 
     <developers>
