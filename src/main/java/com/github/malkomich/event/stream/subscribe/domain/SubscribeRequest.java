@@ -5,9 +5,7 @@ import com.github.malkomich.event.stream.common.EventTopic;
 import io.vertx.core.Handler;
 import io.vertx.core.json.JsonObject;
 import io.vertx.kafka.client.consumer.KafkaConsumerRecord;
-import lombok.Getter;
 
-@Getter
 public class SubscribeRequest extends EventRequest {
 
     private Handler<KafkaConsumerRecord<String, JsonObject>> handler;
@@ -22,12 +20,13 @@ public class SubscribeRequest extends EventRequest {
         return new SubscribeRequestBuilder();
     }
 
+    public Handler<KafkaConsumerRecord<String, JsonObject>> getHandler() {
+        return this.handler;
+    }
+
     public static class SubscribeRequestBuilder {
         private EventTopic topic;
         private Handler<KafkaConsumerRecord<String, JsonObject>> handler;
-
-        SubscribeRequestBuilder() {
-        }
 
         public SubscribeRequestBuilder topic(final EventTopic topic) {
             this.topic = topic;

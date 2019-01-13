@@ -1,9 +1,7 @@
 package com.github.malkomich.event.stream.common;
 
 import io.vertx.core.json.JsonObject;
-import lombok.Getter;
 
-@Getter
 public abstract class EventRequest {
 
     private EventTopic topic;
@@ -18,5 +16,9 @@ public abstract class EventRequest {
 
     public JsonObject toJson() {
         return JsonObject.mapFrom(this);
+    }
+
+    public EventTopic getTopic() {
+        return this.topic;
     }
 }

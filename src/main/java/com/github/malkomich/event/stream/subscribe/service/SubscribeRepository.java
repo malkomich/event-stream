@@ -8,5 +8,5 @@ public interface SubscribeRepository {
 
     SubscribeRepository execute(final SubscribeRequest request, final Handler<AsyncResult<Void>> handler);
 
-    void close();
+    void close(final Handler<AsyncResult<Void>> onClientStopped);
 }

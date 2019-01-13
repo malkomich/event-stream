@@ -3,9 +3,7 @@ package com.github.malkomich.event.stream.publish.domain;
 import com.github.malkomich.event.stream.common.EventRequest;
 import com.github.malkomich.event.stream.common.EventTopic;
 import io.vertx.core.json.JsonObject;
-import lombok.Getter;
 
-@Getter
 public class PublishRequest extends EventRequest {
 
     private JsonObject message;
@@ -27,9 +25,6 @@ public class PublishRequest extends EventRequest {
     public static class PublishRequestBuilder {
         private EventTopic topic;
         private JsonObject message;
-
-        PublishRequestBuilder() {
-        }
 
         public PublishRequest.PublishRequestBuilder topic(final EventTopic topic) {
             this.topic = topic;

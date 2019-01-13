@@ -8,9 +8,7 @@ import com.github.malkomich.event.stream.publish.service.PublishRepository;
 import com.github.malkomich.event.stream.subscribe.domain.SubscribeRequest;
 import com.github.malkomich.event.stream.subscribe.service.KafkaSubscribeRepository;
 import com.github.malkomich.event.stream.subscribe.service.SubscribeRepository;
-import io.vertx.core.AsyncResult;
-import io.vertx.core.Handler;
-import io.vertx.core.Vertx;
+import io.vertx.core.*;
 import io.vertx.kafka.client.producer.KafkaProducer;
 
 public class EventComponent implements EventService {
@@ -38,9 +36,11 @@ public class EventComponent implements EventService {
     }
 
     @Override
-    public void close() {
-        publishRepository.close();
-        subscribeRepository.close();
+    public void close(final Handler<AsyncResult<Void>> onStopped) {
+        final Future publishRepositoryFuture = Future.future();
+        final Future subscribeRepositoryFuture = Future.future();
+        publishRepository.close(publishRepositoryFuture);
+        subscribeRepository.close(subscribeRepositoryFuture);
     }
 
     public static class EventComponentBuilder {

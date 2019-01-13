@@ -8,5 +8,5 @@ public interface PublishRepository {
 
     PublishRepository execute(final PublishRequest request, final Handler<AsyncResult<Void>> handler);
 
-    void close();
+    void close(final Handler<AsyncResult<Void>> onStopped);
 }

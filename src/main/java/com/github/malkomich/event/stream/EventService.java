@@ -11,5 +11,5 @@ public interface EventService {
 
     void subscribe(final SubscribeRequest request, final Handler<AsyncResult<Void>> handler);
 
-    void close();
+    void close(final Handler<AsyncResult<Void>> onClientStopped);
 }

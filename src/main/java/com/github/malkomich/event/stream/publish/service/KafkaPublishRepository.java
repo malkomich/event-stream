@@ -8,10 +8,11 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.kafka.client.producer.KafkaProducer;
 import io.vertx.kafka.client.producer.KafkaProducerRecord;
 import io.vertx.kafka.client.producer.RecordMetadata;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 
-@Slf4j
 public class KafkaPublishRepository implements PublishRepository {
+
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(KafkaPublishRepository.class);
 
     private KafkaProducer<String, JsonObject> producer;
 
@@ -30,8 +31,11 @@ public class KafkaPublishRepository implements PublishRepository {
     }
 
     @Override
-    public void close() {
-        producer.close(onClientStopped -> log.info("Kafka consumer closed!"));
+    public void close(final Handler<AsyncResult<Void>> onStopped) {
+        producer.close(onClientStopped -> {
+            log.info("Kafka consumer closed!");
+            onStopped.handle(Future.succeededFuture());
+        });
     }
 
     private void writeHandler(final Handler<AsyncResult<Void>> handler,

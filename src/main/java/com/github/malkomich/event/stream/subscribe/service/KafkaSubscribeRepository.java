@@ -8,14 +8,15 @@ import io.vertx.core.Future;
 import io.vertx.core.Handler;
 import io.vertx.core.json.JsonObject;
 import io.vertx.kafka.client.consumer.KafkaConsumer;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Slf4j
 public class KafkaSubscribeRepository implements SubscribeRepository {
+
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(KafkaSubscribeRepository.class);
 
     private KafkaConsumerFactory consumerFactory;
     private List<KafkaConsumer> consumers;
@@ -42,15 +43,23 @@ public class KafkaSubscribeRepository implements SubscribeRepository {
     }
 
     @Override
-    public void close() {
+    public void close(final Handler<AsyncResult<Void>> handler) {
         final List<Future> closeFutures = consumers.stream()
-            .map(consumer -> {
-                final Future future = Future.future();
-                consumer.close(onClosed -> future.complete());
-                return future;
-            })
+            .map(this::closeFuture)
             .collect(Collectors.toList());
+
         CompositeFuture.all(closeFutures)
-           .setHandler(onClientStopped -> log.info("Kafka consumer closed!"));
+           .setHandler(onClientStopped -> {
+               if (onClientStopped.succeeded()) {
+                   log.info("Kafka consumer closed!");
+                   handler.handle(Future.succeededFuture());
+               }
+           });
+    }
+
+    private Future closeFuture(final KafkaConsumer consumer) {
+        final Future future = Future.future();
+        consumer.close(onClosed -> future.complete());
+        return future;
     }
 }
