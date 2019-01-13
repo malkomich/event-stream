@@ -8,7 +8,10 @@ import com.github.malkomich.event.stream.publish.service.PublishRepository;
 import com.github.malkomich.event.stream.subscribe.domain.SubscribeRequest;
 import com.github.malkomich.event.stream.subscribe.service.KafkaSubscribeRepository;
 import com.github.malkomich.event.stream.subscribe.service.SubscribeRepository;
-import io.vertx.core.*;
+import io.vertx.core.AsyncResult;
+import io.vertx.core.Future;
+import io.vertx.core.Handler;
+import io.vertx.core.Vertx;
 import io.vertx.kafka.client.producer.KafkaProducer;
 
 public class EventComponent implements EventService {
@@ -46,9 +49,6 @@ public class EventComponent implements EventService {
     public static class EventComponentBuilder {
         private Vertx vertx;
         private KafkaConfig kafkaConfig;
-
-        EventComponentBuilder() {
-        }
 
         public EventComponentBuilder vertx(final Vertx vertx) {
             this.vertx = vertx;

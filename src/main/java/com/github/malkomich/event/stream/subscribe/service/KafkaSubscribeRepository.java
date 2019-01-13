@@ -38,7 +38,6 @@ public class KafkaSubscribeRepository implements SubscribeRepository {
             }
         });
         consumers.add(consumer);
-
         return this;
     }
 

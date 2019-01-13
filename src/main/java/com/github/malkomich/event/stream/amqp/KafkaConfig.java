@@ -22,6 +22,7 @@ public class KafkaConfig {
         server = json.getString("server");
         defaultOffset = json.getString("defaultOffset");
         autoCommit = json.getBoolean("autoCommit");
+        groupId = json.getString("groupId");
         acks = json.getInteger("acks");
     }
 
