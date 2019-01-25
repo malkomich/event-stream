@@ -32,8 +32,10 @@ public class KafkaSubscribeRepository implements SubscribeRepository {
         consumer.handler(request.getHandler());
         consumer.subscribe(request.topicValue(), result -> {
             if (result.succeeded()) {
+                log.info("Service successfully subscribed to topic {}", request.topicValue());
                 handler.handle(Future.succeededFuture());
             } else {
+                log.error("ERROR subscribing to topic {}", request.topicValue());
                 handler.handle(Future.failedFuture(result.cause()));
             }
         });

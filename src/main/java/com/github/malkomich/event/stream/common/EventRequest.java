@@ -1,5 +1,6 @@
 package com.github.malkomich.event.stream.common;
 
+import com.github.malkomich.event.stream.topic.EventTopic;
 import io.vertx.core.json.JsonObject;
 
 public abstract class EventRequest {

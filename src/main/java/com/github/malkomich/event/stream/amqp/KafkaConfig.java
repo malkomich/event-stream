@@ -12,6 +12,11 @@ import java.util.Optional;
 import java.util.Properties;
 
 public class KafkaConfig {
+
+    private static final Integer DEFAULT_ACKS = 1;
+    private static final String DEFAULT_OFFSET = "earliest";
+    private static final Boolean DEFAULT_AUTO_COMMIT = false;
+
     private String server;
     private String defaultOffset;
     private Boolean autoCommit;
@@ -20,10 +25,11 @@ public class KafkaConfig {
 
     public KafkaConfig(final JsonObject json) {
         server = json.getString("server");
-        defaultOffset = json.getString("defaultOffset");
-        autoCommit = json.getBoolean("autoCommit");
+        defaultOffset = json.getString("defaultOffset", DEFAULT_OFFSET);
+        autoCommit = json.getBoolean("autoCommit", DEFAULT_AUTO_COMMIT);
         groupId = json.getString("groupId");
-        acks = json.getInteger("acks");
+        acks = json.getInteger("acks", DEFAULT_ACKS);
+        checkParameters();
     }
 
     @SuppressWarnings("checkstyle:parameternumber")
@@ -37,6 +43,16 @@ public class KafkaConfig {
         this.autoCommit = autoCommit;
         this.groupId = groupId;
         this.acks = acks;
+        checkParameters();
+    }
+
+    private void checkParameters() {
+        if (server == null) {
+            throw new IllegalArgumentException("Kafka server must be provided.");
+        }
+        if (groupId == null) {
+            throw new IllegalArgumentException("Kafka group id must be provided.");
+        }
     }
 
     public static KafkaConfigBuilder builder() {
@@ -81,6 +97,9 @@ public class KafkaConfig {
         private Integer acks;
 
         KafkaConfigBuilder() {
+            defaultOffset = DEFAULT_OFFSET;
+            autoCommit = DEFAULT_AUTO_COMMIT;
+            acks = DEFAULT_ACKS;
         }
 
         public KafkaConfig.KafkaConfigBuilder server(final String server) {

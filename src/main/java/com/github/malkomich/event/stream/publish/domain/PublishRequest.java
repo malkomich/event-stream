@@ -1,15 +1,14 @@
 package com.github.malkomich.event.stream.publish.domain;
 
 import com.github.malkomich.event.stream.common.EventRequest;
-import com.github.malkomich.event.stream.common.EventTopic;
+import com.github.malkomich.event.stream.topic.EventTopic;
 import io.vertx.core.json.JsonObject;
 
 public class PublishRequest extends EventRequest {
 
     private JsonObject message;
 
-    private PublishRequest(final EventTopic topic,
-                           final JsonObject message) {
+    public PublishRequest(final EventTopic topic, final JsonObject message) {
         super(topic);
         this.message = message;
     }
