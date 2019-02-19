@@ -3,6 +3,8 @@ package com.github.malkomich.event.stream.common;
 import com.github.malkomich.event.stream.topic.EventTopic;
 import io.vertx.core.json.JsonObject;
 
+import java.util.Optional;
+
 public abstract class EventRequest {
 
     private EventTopic topic;
@@ -12,7 +14,9 @@ public abstract class EventRequest {
     }
 
     public String topicValue() {
-        return topic.getTopic();
+        return Optional.ofNullable(topic)
+                .map(EventTopic::getTopic)
+                .orElse(null);
     }
 
     public JsonObject toJson() {
